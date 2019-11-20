@@ -126,6 +126,14 @@ def start_training(words, classes, training_data, output):
     elapsed_time = time.time() - start_time
     print("Processing time:", elapsed_time, "seconds")
 
+def preprocess_words(words, stemmer):
+    """Iterate through words and return a stem of each words with no duplicates"""
+    word_set = set([])
+    for word in words:
+        word_set.add(word)
+
+    stems = [stemmer.stem(word) for word in word_set]
+    return stems
 
 """* * * CLASSIFICATION * * *"""
 
@@ -181,6 +189,7 @@ def classify(words, classes, sentence):
 def main():
     """TODO: more instructions here..."""
     stemmer = LancasterStemmer()
+
 
     # Comment this out if you have already trained once and don't want to re-train.
     start_training(words, classes, training_data, output)
