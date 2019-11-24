@@ -161,7 +161,9 @@ def start_training(words, classes, training_data, output):
 
     elapsed_time = time.time() - start_time
     print("Processing time:", elapsed_time, "seconds")
-
+    
+def sigmoid(x):
+  return 1 / (1 + math.exp(-x))
 
 def organize_raw_training_data(raw_training_data, stemmer):
     words = []
@@ -250,6 +252,8 @@ def main():
     raw_training_data = get_raw_training_data('dialogue_data.csv')
 
     words, classes, documents = organize_raw_training_data(raw_training_data, stemmer)
+    
+    training_data, output = create_training_data(words, classes, documents, stemmer)
 
     # Comment this out if you have already trained once and don't want to re-train.
     start_training(words, classes, training_data, output)
