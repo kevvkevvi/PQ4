@@ -149,6 +149,14 @@ def organize_raw_training_data(raw_training_data, stemmer):
         words.append(tokenized)
         document = (tokenized, elements["person"])
         documents.add(document)
+        
+def preprocess_words(words, stemmer):
+    """Iterate through words and return a stem of each words with no duplicates"""
+    word_set = set([])
+    for word in words:
+        word_set.add(word)
+    stems = [stemmer.stem(word) for word in word_set]
+    return stems
 
 """* * * CLASSIFICATION * * *"""
 
