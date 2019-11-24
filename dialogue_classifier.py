@@ -144,11 +144,22 @@ def start_training(words, classes, training_data, output):
 
 def organize_raw_training_data(raw_training_data, stemmer):
     words = []
+    classes = set([])
+    documents = set([])
+    
     for elements in raw_training_data:
         tokenized = nltk.word_tokenize(elements["sentence"])
-        words.append(tokenized)
+        for word in tokenized:
+            words.append(word)
+
         document = (tokenized, elements["person"])
         documents.add(document)
+
+        classes.add(elements["person"])
+
+    words = preprocess_words(words, stemmer)
+
+    return words, classes, documents
 
 """* * * CLASSIFICATION * * *"""
 
@@ -206,6 +217,8 @@ def main():
     stemmer = LancasterStemmer()
 
     raw_training_data = get_raw_training_data('c:/Users/kevvk/OneDrive/Desktop/Fall 2019/CSCI 3725/PQ4/dialogue_data.csv')
+
+    words, classes, documents = organize_raw_training_data(raw_training_data, stemmer)
 
     # Comment this out if you have already trained once and don't want to re-train.
     start_training(words, classes, training_data, output)
