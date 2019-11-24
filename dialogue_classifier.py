@@ -135,6 +135,14 @@ def preprocess_words(words, stemmer):
     stems = [stemmer.stem(word) for word in word_set]
     return stems
 
+def organize_raw_training_data(raw_training_data, stemmer):
+    words = []
+    for elements in raw_training_data:
+        tokenized = nltk.word_tokenize(elements["sentence"])
+        words.append(tokenized)
+        document = (tokenized, elements["person"])
+        documents.add(document)
+
 """* * * CLASSIFICATION * * *"""
 
 def bow(sentence, words):
