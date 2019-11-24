@@ -24,6 +24,27 @@ def get_raw_training_data(filename):
     #print(datadict_list)
     return datadict_list
 
+def create_training_data(words, classes, documents, stemmer):
+    """
+    Takes in the lists of word stems, classes, and documents and returns
+    the training data and output.
+    """
+    training_data = []
+    output = []
+    for tup_info in documents:
+        sent_bag = []
+        sent_belongs = [0]*len(classes)
+        tok_list = tup_info[0]
+        class_index = classes.index(tup_info[1])
+        sent_belongs[class_index] = 1
+        for token in tok_list:
+            if (token in words):
+                sent_bag.append(1)
+            else:
+                sent_bag.append(0)
+        training_data.append(sent_bag)
+        output.append(sent_belongs)
+    return training_data, output
 
 
 def init_synapses(X, hidden_neurons, classes):
