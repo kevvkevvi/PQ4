@@ -21,7 +21,7 @@ def get_raw_training_data(filename):
             data_dict["person"] = row[0]
             data_dict["sentence"] = row[1:]
             datadict_list.append(data_dict)
-    print(datadict_list)
+    #print(datadict_list)
     return datadict_list
 
 
@@ -145,15 +145,22 @@ def start_training(words, classes, training_data, output):
 def organize_raw_training_data(raw_training_data, stemmer):
     words = []
     classes = set([])
-    documents = set([])
+    documents = []
     
     for elements in raw_training_data:
-        tokenized = nltk.word_tokenize(elements["sentence"])
-        for word in tokenized:
-            words.append(word)
+        for sentences in elements["sentence"]:
+            tokenized = nltk.word_tokenize(sentences)
+            for word in tokenized:
+                words.append(word)
 
-        document = (tokenized, elements["person"])
-        documents.add(document)
+            document = (tokenized, elements["person"])
+            documents.append(document)
+
+        classes.add(elements["person"])
+
+    words = preprocess_words(words, stemmer)
+
+    return words, classes, documents
         
 def preprocess_words(words, stemmer):
     """Iterate through words and return a stem of each words with no duplicates"""
@@ -163,11 +170,6 @@ def preprocess_words(words, stemmer):
     stems = [stemmer.stem(word) for word in word_set]
     return stems
 
-        classes.add(elements["person"])
-
-    words = preprocess_words(words, stemmer)
-
-    return words, classes, documents
 
 """* * * CLASSIFICATION * * *"""
 
@@ -224,7 +226,7 @@ def main():
     """TODO: more instructions here..."""
     stemmer = LancasterStemmer()
 
-    raw_training_data = get_raw_training_data('c:/Users/kevvk/OneDrive/Desktop/Fall 2019/CSCI 3725/PQ4/dialogue_data.csv')
+    raw_training_data = get_raw_training_data('dialogue_data.csv')
 
     words, classes, documents = organize_raw_training_data(raw_training_data, stemmer)
 
