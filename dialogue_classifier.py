@@ -11,6 +11,21 @@ import csv
 import numpy as np
 import time
 
+
+def get_raw_training_data(filename):
+    datadict_list = []
+    with open(filename, newline='') as csvfile:
+        datareader = csv.reader(csvfile, delimiter=',', quotechar='|')
+        for row in datareader:
+            data_dict = dict()
+            data_dict["person"] = row[0]
+            data_dict["sentence"] = row[1:]
+            datadict_list.append(data_dict)
+    print(datadict_list)
+    return datadict_list
+
+
+
 def init_synapses(X, hidden_neurons, classes):
     """Initializes our synapses (using random values)."""
     # Ensures we have a "consistent" randomness for convenience.
@@ -126,14 +141,6 @@ def start_training(words, classes, training_data, output):
     elapsed_time = time.time() - start_time
     print("Processing time:", elapsed_time, "seconds")
 
-def preprocess_words(words, stemmer):
-    """Iterate through words and return a stem of each words with no duplicates"""
-    word_set = set([])
-    for word in words:
-        word_set.add(word)
-
-    stems = [stemmer.stem(word) for word in word_set]
-    return stems
 
 def organize_raw_training_data(raw_training_data, stemmer):
     words = []
@@ -198,6 +205,7 @@ def main():
     """TODO: more instructions here..."""
     stemmer = LancasterStemmer()
 
+    raw_training_data = get_raw_training_data('c:/Users/kevvk/OneDrive/Desktop/Fall 2019/CSCI 3725/PQ4/dialogue_data.csv')
 
     # Comment this out if you have already trained once and don't want to re-train.
     start_training(words, classes, training_data, output)
