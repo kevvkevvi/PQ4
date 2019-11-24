@@ -181,7 +181,7 @@ def organize_raw_training_data(raw_training_data, stemmer):
 
     words = preprocess_words(words, stemmer)
 
-    return words, classes, documents
+    return words, list(classes), documents
         
 def preprocess_words(words, stemmer):
     """Iterate through words and return a stem of each words with no duplicates"""
