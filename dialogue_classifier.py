@@ -167,7 +167,11 @@ def start_training(words, classes, training_data, output):
     print("Processing time:", elapsed_time, "seconds")
     
 def sigmoid(x):
-    return 1 / (1 + math.exp(-x))
+    return 1 / (1 + np.exp(-x))
+
+def sigmoid_output_to_derivative(output):
+    """Convert the sigmoid function's output to its derivative."""
+    return output*(1-output)
 
 def organize_raw_training_data(raw_training_data, stemmer):
     words = set([])
