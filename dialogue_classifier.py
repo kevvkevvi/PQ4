@@ -14,15 +14,18 @@ import math
 
 
 def get_raw_training_data(filename):
+    """
+    Reads a CSV file and returns the data as a list of dictionaries
+    """
     datadict_list = []
     with open(filename, newline='') as csvfile:
         datareader = csv.reader(csvfile, delimiter=',', quotechar='|')
+        #iterate through the rows in datareader
         for row in datareader:
             data_dict = dict()
             data_dict["person"] = row[0]
             data_dict["sentence"] = row[1:]
             datadict_list.append(data_dict)
-    #print(datadict_list)
     return datadict_list
 
 def create_training_data(words, classes, documents, stemmer):
@@ -32,12 +35,20 @@ def create_training_data(words, classes, documents, stemmer):
     """
     training_data = []
     output = []
+    #iterate throught the tuples in documents
     for tup_info in documents:
+        #initialize sent_bag and sent_belong to represent the
+        #bag of words in a sentence and which author the sentence
+        #belongs to
         sent_bag = [0]*len(words)
         sent_belongs = [0]*len(classes)
+        #list of tokens
         tok_list = tup_info[0]
+        #index of the class name in classes
         class_index = classes.index(tup_info[1])
         sent_belongs[class_index] = 1
+        #iterate through the tokens in the token list to see if the
+        #token is in our words
         for token in tok_list:
             if (token in words):
                 token_index = words.index(token)
