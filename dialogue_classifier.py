@@ -62,8 +62,10 @@ def init_synapses(X, hidden_neurons, classes):
 
 def feedforward(X, synapse_0, synapse_1):
     """Feed forward through layers 0, 1, and 2."""
+    print(X.shape)
+    print(synapse_0.shape)
+    print(synapse_1.shape)
     layer_0 = X
-
     layer_1 = sigmoid(np.dot(layer_0, synapse_0))
     layer_2 = sigmoid(np.dot(layer_1, synapse_1))
     return layer_0, layer_1, layer_2
@@ -173,17 +175,19 @@ def organize_raw_training_data(raw_training_data, stemmer):
     documents = []
     
     for elements in raw_training_data:
+        tokenized = []
         for sentences in elements["sentence"]:
             tokenized = nltk.word_tokenize(sentences)
             for word in tokenized:
                 words.add(word)
 
-            document = (tokenized, elements["person"])
-            documents.append(document)
+        document = (tokenized, elements["person"])
+        documents.append(document)
 
         classes.add(elements["person"])
 
     words = preprocess_words(list(words), stemmer)
+
 
     return words, list(classes), documents
         
