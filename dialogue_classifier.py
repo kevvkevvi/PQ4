@@ -10,6 +10,7 @@ import datetime
 import csv
 import numpy as np
 import time
+import math
 
 
 def get_raw_training_data(filename):
@@ -31,8 +32,6 @@ def create_training_data(words, classes, documents, stemmer):
     """
     training_data = []
     output = []
-    for word in words:
-        print(word)
     for tup_info in documents:
         sent_bag = [0]*len(words)
         sent_belongs = [0]*len(classes)
@@ -45,8 +44,7 @@ def create_training_data(words, classes, documents, stemmer):
                 sent_bag[token_index] = 1
         training_data.append(sent_bag)
         output.append(sent_belongs)
-    for list_sen in training_data:
-        print(len(training_data))
+
     return training_data, output
 
 
@@ -169,7 +167,7 @@ def sigmoid(x):
   return 1 / (1 + math.exp(-x))
 
 def organize_raw_training_data(raw_training_data, stemmer):
-    words = []
+    words = set([])
     classes = set([])
     documents = []
     
@@ -177,14 +175,14 @@ def organize_raw_training_data(raw_training_data, stemmer):
         for sentences in elements["sentence"]:
             tokenized = nltk.word_tokenize(sentences)
             for word in tokenized:
-                words.append(word)
+                words.add(word)
 
             document = (tokenized, elements["person"])
             documents.append(document)
 
         classes.add(elements["person"])
 
-    words = preprocess_words(words, stemmer)
+    words = preprocess_words(list(words), stemmer)
 
     return words, list(classes), documents
         
