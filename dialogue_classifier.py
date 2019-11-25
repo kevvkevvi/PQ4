@@ -164,6 +164,7 @@ def start_training(words, classes, training_data, output):
     print("Processing time:", elapsed_time, "seconds")
     
 def sigmoid(x):
+    """Basic sigmoid function"""
     return 1 / (1 + np.exp(-x))
 
 def sigmoid_output_to_derivative(output):
@@ -171,6 +172,8 @@ def sigmoid_output_to_derivative(output):
     return output * (1-output)
 
 def organize_raw_training_data(raw_training_data, stemmer):
+    """Iterate through the raw_training_data and seperate into words,
+    classes and documents respectively"""
     words = set([])
     classes = set([])
     documents = []
@@ -262,7 +265,7 @@ def main():
     training_data, output = create_training_data(words, classes, documents, stemmer)
 
     # Comment this out if you have already trained once and don't want to re-train.
-    start_training(words, classes, training_data, output)
+    #start_training(words, classes, training_data, output)
 
     # Classify new sentences.
     classify(words, classes, "will you look into the mirror?")
