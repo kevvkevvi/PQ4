@@ -1,4 +1,8 @@
-"""TODO: add more here..."""
+"""dialogue_classifier.py - George Benz and Kevin Li
+CSCI 3725, PQ4
+
+Creates a simple neural network.
+"""
 
 """* * * TRAINING * * *"""
 
