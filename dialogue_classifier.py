@@ -31,19 +31,22 @@ def create_training_data(words, classes, documents, stemmer):
     """
     training_data = []
     output = []
+    for word in words:
+        print(word)
     for tup_info in documents:
-        sent_bag = []
+        sent_bag = [0]*len(words)
         sent_belongs = [0]*len(classes)
         tok_list = tup_info[0]
         class_index = classes.index(tup_info[1])
         sent_belongs[class_index] = 1
         for token in tok_list:
             if (token in words):
-                sent_bag.append(1)
-            else:
-                sent_bag.append(0)
+                token_index = words.index(token)
+                sent_bag[token_index] = 1
         training_data.append(sent_bag)
         output.append(sent_belongs)
+    for list_sen in training_data:
+        print(len(training_data))
     return training_data, output
 
 
