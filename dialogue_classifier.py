@@ -63,6 +63,7 @@ def init_synapses(X, hidden_neurons, classes):
 def feedforward(X, synapse_0, synapse_1):
     """Feed forward through layers 0, 1, and 2."""
     layer_0 = X
+
     layer_1 = sigmoid(np.dot(layer_0, synapse_0))
     layer_2 = sigmoid(np.dot(layer_1, synapse_1))
     return layer_0, layer_1, layer_2
@@ -164,7 +165,7 @@ def start_training(words, classes, training_data, output):
     print("Processing time:", elapsed_time, "seconds")
     
 def sigmoid(x):
-  return 1 / (1 + math.exp(-x))
+    return 1 / (1 + math.exp(-x))
 
 def organize_raw_training_data(raw_training_data, stemmer):
     words = set([])
